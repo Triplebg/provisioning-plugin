@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="provisioning.plugin" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>provisioning-plugin</name>
+	<js-module name="marvell-provisioning" src="www/marvell-provisioning.js">
+		<clobbers target="cordova.plugins.marvell_provisioning" />
+	</js-module>
+	
+	<platform name="android">
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="marvell-provisioning">
+				<param name="android-package" value="marvell.provisioning.MarvellProvisioning" />
+			</feature>
+		</config-file>
+		<config-file parent="/*" target="AndroidManifest.xml"></config-file>
+		<config-file parent="/manifest" target="AndroidManifest.xml">
+			<uses-permission android:name="android.permission.INTERNET" />
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+			<uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+		</config-file>
+		<source-file src="src/android/MarvellProvisioning.java" target-dir="src/marvell/provisioning/marvell-provisioning" />
+	</platform>
+	
+	<platform name="ios">
+		<config-file parent="/*" target="config.xml">
+			<feature name="marvell-provisioning">
+				<param name="ios-package" value="marvell-provisioning" />
+			</feature>
+		</config-file>
+		<source-file src="src/ios/marvell-provisioning.m" />
+	</platform>
+</plugin>
