@@ -6,12 +6,13 @@
 #import "CommonCrypto/CommonCryptor.h"
 #import "CommonCrypto/CommonKeyDerivation.h"
 
+/*
 #import "Reachability.h"
 #import "Constant.h"
 #import "ServerRequestDelegate.h"
 #import "AppDelegate.h"
 #import "MessageList.h"
-#import "errno.h"
+#import "errno.h"*/
 
 @interface marvell_provisioning : CDVPlugin 
 {
