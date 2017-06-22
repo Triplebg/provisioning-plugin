@@ -28,9 +28,9 @@
 			</feature>
 		</config-file>
 		<source-file src="src/ios/marvell-provisioning.m" />
-		<framework src=”QuartzCore.framework” /> 
-		<framework src=”UIKit.framework” />
-		<framework src=”Foundation.framework” />
-		<framework src=”zlib.dylib” />
+		<!-- <framework src=”QuartzCore.framework” />  -->
+		<!-- <framework src=”UIKit.framework” /> -->
+		<!-- <framework src=”Foundation.framework” /> -->
+		<!-- <framework src=”zlib.dylib” /> -->
 	</platform>
 </plugin>
