@@ -76,7 +76,8 @@
 			  data_ = [command.arguments objectAtIndex:3];  //txtCustomData.text 
 			  
 	strcpy(ssid, [ssid_ UTF8String]);		  
-	strcpy(passphrase, [pss_ UTF8String]);			  
+	strcpy(passphrase, [pss_ UTF8String]);	
+	passLength = [pss_ length];	
 	
 	//ssid[33];
 	//passphrase[64];
@@ -119,8 +120,9 @@
 -(void)xmitterTask
 {
     //strcpy(passphrase, [txtPassword.text UTF8String]);
-	strcpy(customData, [data_ UTF8String]);	
-    passLength = (int)passphrase.length;
+	//strcpy(customData, [data_ UTF8String]);
+	customData = [data_ UTF8String];
+    //passLength = (int)passphrase.length;
     passLen = passLength;
     unsigned char *str_passphrase = (unsigned char *)passphrase;
     unsigned char *str_ssid = (unsigned char *)ssid;
@@ -173,7 +175,7 @@
             key[i] = 0x00;
 
         [self myEncryptPassphrase: key passPhrase: plainpass];
-        [self myEncryptCustomData: key customData: customDataString];
+        [self myEncryptCustomData: key customData: customData];
     }
 
     if (!inProgress) 
