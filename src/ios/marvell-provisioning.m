@@ -161,7 +161,7 @@
         }
         
         //customDataCRC = crc32(0, customData, encryptedCustomDataLen);
-		[self generateCRC32:customData sizeInBytes:encryptedCustomDataLen output:customDataCRC]
+		[self generateCRC32:customData sizeInBytes:encryptedCustomDataLen output:customDataCRC];
         customDataCRC = customDataCRC & 0xffffffff;
     }
 
