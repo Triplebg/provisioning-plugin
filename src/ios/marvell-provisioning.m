@@ -160,7 +160,8 @@
             encryptedCustomDataLen = ((customDataLen / 16) + 1) * 16;
         }
         
-        customDataCRC = crc32(0, customData, encryptedCustomDataLen);
+        //customDataCRC = crc32(0, customData, encryptedCustomDataLen);
+		[self generateCRC32:customData sizeInBytes:encryptedCustomDataLen output:customDataCRC)
         customDataCRC = customDataCRC & 0xffffffff;
     }
 
@@ -201,6 +202,27 @@
         //[_btnProvision setTitle:@"START" forState:UIControlStateNormal];
         //flag = 1;
     }
+}
+
+// void serCRC_generateCRC32 (uint8_t* byte_array_pt, uint64_t size_in_bytes, uint32_t* crc)
+-(void) generateCRC32 : (Byte [])byte_array_pt 
+					sizeInBytes:(unsigned int)size_in_bytes 
+						output:(unsigned long*)crc
+{
+        int8_t i;
+        uint32_t mask;
+
+        *crc = 0xFFFFFFFF;
+        while (size_in_bytes--)
+        {
+            *crc = *crc ^ *byte_array_pt++;
+            for (i = 7; i >= 0; i--) // Do eight times.
+            {
+                 mask = -(*crc & 1);
+                 *crc = (*crc >> 1) ^ (0xEDB88320 & mask);
+            }
+        }
+        *crc = ~*crc;
 }
 
 -(void) myEncryptPassphrase : (char [])key passPhrase:(char [])secret
