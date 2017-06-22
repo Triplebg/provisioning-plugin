@@ -119,6 +119,7 @@
 -(void)xmitterTask
 {
     //strcpy(passphrase, [txtPassword.text UTF8String]);
+	strcpy(customData, [data_ UTF8String]);	
     passLength = (int)passphrase.length;
     passLen = passLength;
     unsigned char *str_passphrase = (unsigned char *)passphrase;
@@ -131,8 +132,8 @@
     ssidCRC = ssidCRC & 0xffffffff;
 
     NSString *customDataString = data_;
-    for (int i = 0; i < sizeof(customDataString); i++)
-        customDataString[i] = 0x00;
+    for (int i = 0; i < sizeof(customData); i++)
+        customData[i] = 0x00;
     if ([customDataString length] % 2) {
         customDataLen = 0;
         customDataCRC = 0;
@@ -142,7 +143,7 @@
             NSString *word = [customDataString substringWithRange:NSMakeRange(i, 2)];
             unsigned int c;
             [[NSScanner scannerWithString:word] scanHexInt:&c];
-            customDataString[i/2] = c;
+            customData[i/2] = c;
         }
         if (customDataLen % 16 == 0) {
             encryptedCustomDataLen = customDataLen;
@@ -150,7 +151,7 @@
             encryptedCustomDataLen = ((customDataLen / 16) + 1) * 16;
         }
         
-        customDataCRC = crc32(0, customDataString, encryptedCustomDataLen);
+        customDataCRC = crc32(0, customData, encryptedCustomDataLen);
         customDataCRC = customDataCRC & 0xffffffff;
     }
 
