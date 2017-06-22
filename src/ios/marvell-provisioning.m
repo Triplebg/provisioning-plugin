@@ -2,7 +2,6 @@
 
 #import <Cordova/CDV.h>
 #import "zlib.h"
-#import "libz.tbd"
 
 #import "arpa/inet.h"
 #import "CommonCrypto/CommonCryptor.h"
