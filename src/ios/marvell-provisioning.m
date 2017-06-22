@@ -2,6 +2,7 @@
 
 #import <Cordova/CDV.h>
 #import "zlib.h"
+#import "libz.dylib"
 #import "arpa/inet.h"
 #import "CommonCrypto/CommonCryptor.h"
 #import "CommonCrypto/CommonKeyDerivation.h"
