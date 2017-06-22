@@ -42,8 +42,8 @@
     unsigned char preamble[6];	
 	Byte customData[32];	
 	Byte encryptedCustomData[32];
-	NSInteger state;
-	NSInteger substate;
+//	NSInteger state;
+//	NSInteger substate;
 	NSTimer *timer;
     NSTimer *timerMdns;
 	
@@ -54,8 +54,8 @@
 }
 
 @property (strong,atomic) NSMutableArray *services;
-//@property (assign, nonatomic) NSInteger state;
-//@property (assign, nonatomic) NSInteger substate;
+@property (assign, nonatomic) NSInteger state;
+@property (assign, nonatomic) NSInteger substate;
 
 - (void)SendProvisionData:(CDVInvokedUrlCommand*)command;
 @end
@@ -76,7 +76,7 @@
 			  data_ = [command.arguments objectAtIndex:3];  //txtCustomData.text 
 			  
 	strcpy(ssid, [ssid_ UTF8String]);		  
-	strcpy(pss, [pss_ UTF8String]);			  
+	strcpy(passphrase, [pss_ UTF8String]);			  
 	
 	//ssid[33];
 	//passphrase[64];
@@ -119,7 +119,7 @@
 -(void)xmitterTask
 {
     //strcpy(passphrase, [txtPassword.text UTF8String]);
-    passLength = (int)pss.length;
+    passLength = (int)passphrase.length;
     passLen = passLength;
     unsigned char *str_passphrase = (unsigned char *)passphrase;
     unsigned char *str_ssid = (unsigned char *)ssid;
@@ -131,8 +131,8 @@
     ssidCRC = ssidCRC & 0xffffffff;
 
     NSString *customDataString = data_;
-    for (int i = 0; i < sizeof(customData); i++)
-        customData[i] = 0x00;
+    for (int i = 0; i < sizeof(customDataString); i++)
+        customDataString[i] = 0x00;
     if ([customDataString length] % 2) {
         customDataLen = 0;
         customDataCRC = 0;
@@ -142,7 +142,7 @@
             NSString *word = [customDataString substringWithRange:NSMakeRange(i, 2)];
             unsigned int c;
             [[NSScanner scannerWithString:word] scanHexInt:&c];
-            customData[i/2] = c;
+            customDataString[i/2] = c;
         }
         if (customDataLen % 16 == 0) {
             encryptedCustomDataLen = customDataLen;
@@ -150,7 +150,7 @@
             encryptedCustomDataLen = ((customDataLen / 16) + 1) * 16;
         }
         
-        customDataCRC = crc32(0, customData, encryptedCustomDataLen);
+        customDataCRC = crc32(0, customDataString, encryptedCustomDataLen);
         customDataCRC = customDataCRC & 0xffffffff;
     }
 
@@ -172,7 +172,7 @@
             key[i] = 0x00;
 
         [self myEncryptPassphrase: key passPhrase: plainpass];
-        [self myEncryptCustomData: key customData: customData];
+        [self myEncryptCustomData: key customData: customDataString];
     }
 
     if (!inProgress) 
@@ -186,8 +186,8 @@
             [timer invalidate];
             timer = nil;
         }
-        state = 0;
-        substate = 0;
+        _state = 0;
+        _substate = 0;
         //[_btnProvision setTitle:@"START" forState:UIControlStateNormal];
         //flag = 1;
     }
@@ -333,7 +333,7 @@
 -(void)statemachine
 {
     NSString *temp;
-    if (state == 0 && substate == 0) {
+    if (_state == 0 && _substate == 0) {
         TimerCount++;
         if (TimerCount % 10 == 0) {
             temp = [NSString stringWithFormat:@"Information sent %d times.", TimerCount];
@@ -352,77 +352,78 @@
             [timer invalidate];
             timer = nil;
         }
-        state = 0;
-        substate = 0;
+        _state = 0;
+        _substate = 0;
         TimerCount = 0;
         //[_btnProvision setTitle:@"START" forState:UIControlStateNormal];
-        flag = 1;
+        //flag = 1;
     }
 
-    switch(state) {
+    switch(_state) {
         case 0:
-            if (substate == 3) {
-                state = 1;
-                substate = 0;
+            if (_substate == 3) {
+                _state = 1;
+                _substate = 0;
             } else {
-                [self xmitState0:substate];
-                substate++;
+                [self xmitState0:_substate];
+                _substate++;
             }
             break;
         case 1:
 
-            [self xmitState1:substate LengthSSID:2];
-            substate++;
+            [self xmitState1:_substate LengthSSID:2];
+            _substate++;
             if (ssidLength % 2 == 1) {
-                if (substate * 2 == ssidLength + 5) {
-                    [self xmitState1:substate LengthSSID: 1];
-                    state = 2;
-                    substate = 0;
+                if (_substate * 2 == ssidLength + 5) {
+                    [self xmitState1:_substate LengthSSID: 1];
+                    _state = 2;
+                    _substate = 0;
                 }
             } else {
-                if ((substate - 1) * 2 == (ssidLength + 4)) {
-                    state = 2;
-                    substate = 0;
+                if ((_substate - 1) * 2 == (ssidLength + 4)) {
+                    _state = 2;
+                    _substate = 0;
                 }
             }
             break;
         case 2:
-            [self xmitState2:substate LengthPassphrase:2];
+            [self xmitState2:_substate LengthPassphrase:2];
 
-            substate++;
+            _substate++;
             if (passLen % 2 == 1) {
-                if (substate * 2 == passLen + 5) {
-                    [self xmitState2:substate LengthPassphrase: 1];
-                    state = 3;
-                    substate = 0;
+                if (_substate * 2 == passLen + 5) {
+                    [self xmitState2:_substate LengthPassphrase: 1];
+                    _state = 3;
+                    _substate = 0;
                 }
             } else {
-                if ((substate - 1) * 2 == (passLen + 4)) {
-                    state = 3;
-                    substate = 0;
+                if ((_substate - 1) * 2 == (passLen + 4)) {
+                    _state = 3;
+                    _substate = 0;
                 }
             }
             break;
         case 3:
-            [self xmitState3:substate LengthCustomData:2];
+            [self xmitState3:_substate LengthCustomData:2];
             
-            substate++;
+            _substate++;
             if (encryptedCustomDataLen % 2 == 1) {
-                if (substate * 2 == encryptedCustomDataLen + 5) {
-                    [self xmitState3:substate LengthCustomData: 1];
-                    state = 0;
-                    substate = 0;
+                if (_substate * 2 == encryptedCustomDataLen + 5) {
+                    [self xmitState3:_substate LengthCustomData: 1];
+                    _state = 0;
+                    _substate = 0;
                 }
             } else {
-                if ((substate - 1) * 2 == (encryptedCustomDataLen + 4)) {
-                    state = 0;
-                    substate = 0;
+                if ((_substate - 1) * 2 == (encryptedCustomDataLen + 4)) {
+                    _state = 0;
+                    _substate = 0;
                 }
             }
             break;
 
             default:
             //NSLog(@"MRVL: I should not be here!");
+				break;
         }
 }
 
