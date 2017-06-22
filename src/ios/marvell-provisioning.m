@@ -121,7 +121,13 @@
 {
     //strcpy(passphrase, [txtPassword.text UTF8String]);
 	//strcpy(customData, [data_ UTF8String]);
-	customData = [data_ UTF8String];
+	//customData = [data_ UTF8String];
+	
+	// Getting Byte Array from NSString
+	const char *utfString = [data_ UTF8String];
+	NSData *myData = [NSData dataWithBytes: utfString length: strlen(utfString)];
+	[myData getBytes:customData length:32];
+	
     //passLength = (int)passphrase.length;
     passLen = passLength;
     unsigned char *str_passphrase = (unsigned char *)passphrase;
