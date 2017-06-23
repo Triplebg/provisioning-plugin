@@ -71,6 +71,8 @@
     CDVPluginResult* pluginResult = nil;
     NSString* echo = [command.arguments objectAtIndex:0];
 	
+	NSLog(@"API function entered!");
+	
 	UIAlertView *alertView = [[UIAlertView alloc]
                            initWithTitle:@"DefaultStyle" 
                            message:@"API function worked!"
