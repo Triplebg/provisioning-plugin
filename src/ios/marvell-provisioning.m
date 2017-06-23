@@ -88,8 +88,8 @@
 	strcpy(passphrase, [pss_ UTF8String]);	
 	passLength = [pss_ length];	
 	
-	ssid[33];
-	passphrase[64];
+	// ssid[33];
+	// passphrase[64];
 
     if (echo != nil && [echo length] > 0) {
 		[self xmitterTask];
