@@ -143,10 +143,10 @@
     unsigned char *str_passphrase = (unsigned char *)passphrase;
     unsigned char *str_ssid = (unsigned char *)ssid;
 
-    //passCRC = crc32(0, str_passphrase, passLen);
-    //ssidCRC = crc32(0, str_ssid, ssidLength);
-	[self generateCRC32:str_passphrase sizeInBytes:passLen    output:passCRC];
-	[self generateCRC32:str_ssid 	   sizeInBytes:ssidLength output:ssidCRC];
+    passCRC = crc32(0, str_passphrase, passLen);
+    ssidCRC = crc32(0, str_ssid, ssidLength);
+	//[self generateCRC32:str_passphrase sizeInBytes:passLen    output:passCRC];
+	//[self generateCRC32:str_ssid 	   sizeInBytes:ssidLength output:ssidCRC];
 
     passCRC = passCRC & 0xffffffff;
     ssidCRC = ssidCRC & 0xffffffff;
@@ -171,8 +171,8 @@
             encryptedCustomDataLen = ((customDataLen / 16) + 1) * 16;
         }
         
-        //customDataCRC = crc32(0, customData, encryptedCustomDataLen);
-		[self generateCRC32:customData sizeInBytes:encryptedCustomDataLen output:customDataCRC];
+        customDataCRC = crc32(0, customData, encryptedCustomDataLen);
+		//[self generateCRC32:customData sizeInBytes:encryptedCustomDataLen output:customDataCRC];
         customDataCRC = customDataCRC & 0xffffffff;
     }
 
