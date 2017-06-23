@@ -145,74 +145,74 @@
 
     //passCRC = crc32(0, str_passphrase, passLen);
     //ssidCRC = crc32(0, str_ssid, ssidLength);
-	//[self generateCRC32:str_passphrase sizeInBytes:passLen    output:passCRC];
-	//[self generateCRC32:str_ssid 	   sizeInBytes:ssidLength output:ssidCRC];
+	[self generateCRC32:str_passphrase sizeInBytes:passLen    output:passCRC];
+	[self generateCRC32:str_ssid 	   sizeInBytes:ssidLength output:ssidCRC];
 
     passCRC = passCRC & 0xffffffff;
     ssidCRC = ssidCRC & 0xffffffff;
 
-    // NSString *customDataString = data_;
-    // for (int i = 0; i < sizeof(customData); i++)
-        // customData[i] = 0x00;
-    // if ([customDataString length] % 2) {
-        // customDataLen = 0;
-        // customDataCRC = 0;
-    // } else {
-        // customDataLen = (int)[customDataString length] / 2;
-        // for (int i = 0; i < [customDataString length]; i += 2) {
-            // NSString *word = [customDataString substringWithRange:NSMakeRange(i, 2)];
-            // unsigned int c;
-            // [[NSScanner scannerWithString:word] scanHexInt:&c];
-            // customData[i/2] = c;
-        // }
-        // if (customDataLen % 16 == 0) {
-            // encryptedCustomDataLen = customDataLen;
-        // } else {
-            // encryptedCustomDataLen = ((customDataLen / 16) + 1) * 16;
-        // }
+    NSString *customDataString = data_;
+    for (int i = 0; i < sizeof(customData); i++)
+        customData[i] = 0x00;
+    if ([customDataString length] % 2) {
+        customDataLen = 0;
+        customDataCRC = 0;
+    } else {
+        customDataLen = (int)[customDataString length] / 2;
+        for (int i = 0; i < [customDataString length]; i += 2) {
+            NSString *word = [customDataString substringWithRange:NSMakeRange(i, 2)];
+            unsigned int c;
+            [[NSScanner scannerWithString:word] scanHexInt:&c];
+            customData[i/2] = c;
+        }
+        if (customDataLen % 16 == 0) {
+            encryptedCustomDataLen = customDataLen;
+        } else {
+            encryptedCustomDataLen = ((customDataLen / 16) + 1) * 16;
+        }
         
-        // //customDataCRC = crc32(0, customData, encryptedCustomDataLen);
-		// [self generateCRC32:customData sizeInBytes:encryptedCustomDataLen output:customDataCRC];
-        // customDataCRC = customDataCRC & 0xffffffff;
-    // }
+        //customDataCRC = crc32(0, customData, encryptedCustomDataLen);
+		[self generateCRC32:customData sizeInBytes:encryptedCustomDataLen output:customDataCRC];
+        customDataCRC = customDataCRC & 0xffffffff;
+    }
 
-    // if ([key_ length] != 0) {
-        // char plainpass[100];
-        // bzero(plainpass, 100);
-        // char key[100];
-        // bzero(key, 100);
-        // int i;
-        // if (passLen % 16 != 0) {
-            // passLen = (16 - passLen%16) + passLen;
-            // for (i = 0; i < passLength; i++)
-                // plainpass[i] = passphrase[i];
-            // for (; i < passLen; i++)
-                // plainpass[i] = 0x00;
-        // }
-        // strcpy(key,[key_ UTF8String]);
-        // for (i = (int)strlen(key); i < 100; i++)
-            // key[i] = 0x00;
+    if ([key_ length] != 0) {
+        char plainpass[100];
+        bzero(plainpass, 100);
+        char key[100];
+        bzero(key, 100);
+        int i;
+        if (passLen % 16 != 0) {
+            passLen = (16 - passLen%16) + passLen;
+            for (i = 0; i < passLength; i++)
+                plainpass[i] = passphrase[i];
+            for (; i < passLen; i++)
+                plainpass[i] = 0x00;
+        }
+        strcpy(key,[key_ UTF8String]);
+        for (i = (int)strlen(key); i < 100; i++)
+            key[i] = 0x00;
 
-        // [self myEncryptPassphrase: key passPhrase: plainpass];
-        // [self myEncryptCustomData: key customData: customData];
-    // }
+        [self myEncryptPassphrase: key passPhrase: plainpass];
+        [self myEncryptCustomData: key customData: customData];
+    }
 
-    // if (!inProgress) 
-	// {
-		// inProgress = YES;
-        // //NSLog(@"TEXT is %@", _btnProvision.titleLabel.text);
-        // timer=  [NSTimer scheduledTimerWithTimeInterval:0.001 target:self selector:
-                 // @selector(statemachine) userInfo:nil repeats:YES];
-    // } else {
-        // if ([timer isValid] && [timer isKindOfClass:[NSTimer class]]) {
-            // [timer invalidate];
-            // timer = nil;
-        // }
-        // _state = 0;
-        // _substate = 0;
-        // //[_btnProvision setTitle:@"START" forState:UIControlStateNormal];
-        // //flag = 1;
-    // }
+    if (!inProgress) 
+	{
+		inProgress = YES;
+        //NSLog(@"TEXT is %@", _btnProvision.titleLabel.text);
+        timer=  [NSTimer scheduledTimerWithTimeInterval:0.001 target:self selector:
+                 @selector(statemachine) userInfo:nil repeats:YES];
+    } else {
+        if ([timer isValid] && [timer isKindOfClass:[NSTimer class]]) {
+            [timer invalidate];
+            timer = nil;
+        }
+        _state = 0;
+        _substate = 0;
+        //[_btnProvision setTitle:@"START" forState:UIControlStateNormal];
+        //flag = 1;
+    }
 }
 
 // void serCRC_generateCRC32 (uint8_t* byte_array_pt, uint64_t size_in_bytes, uint32_t* crc)
@@ -220,8 +220,8 @@
 					sizeInBytes:(unsigned int)size_in_bytes 
 						output:(unsigned long*)crc
 {
-        int8_t i;
-        uint32_t mask;
+        int i;
+        unsigned int mask;
 
         *crc = 0xFFFFFFFF;
         while (size_in_bytes--)
