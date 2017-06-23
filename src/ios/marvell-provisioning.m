@@ -87,6 +87,7 @@
 	strcpy(ssid, [ssid_ UTF8String]);		  
 	strcpy(passphrase, [pss_ UTF8String]);	
 	passLength = [pss_ length];	
+	ssidLength = [ssid_ length];	
 	
 	// ssid[33];
 	// passphrase[64];
@@ -203,6 +204,12 @@
         //NSLog(@"TEXT is %@", _btnProvision.titleLabel.text);
         timer=  [NSTimer scheduledTimerWithTimeInterval:0.001 target:self selector:
                  @selector(statemachine) userInfo:nil repeats:YES];
+		
+		while(inProgress)
+		{
+			[self statemachine];
+		}
+		
     } else {
         if ([timer isValid] && [timer isKindOfClass:[NSTimer class]]) {
             [timer invalidate];
@@ -398,6 +405,7 @@
         _state = 0;
         _substate = 0;
         TimerCount = 0;
+		inProgress = NO;
         //[_btnProvision setTitle:@"START" forState:UIControlStateNormal];
         //flag = 1;
     }
