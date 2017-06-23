@@ -70,17 +70,14 @@
 {
     CDVPluginResult* pluginResult = nil;
     NSString* echo = [command.arguments objectAtIndex:0];
-	
-	NSLog(@"API function entered!");
-	
-	UIAlertView *alertView = [[UIAlertView alloc]
-                           initWithTitle:@"DefaultStyle" 
-                           message:@"API function worked!"
-                           delegate:self 
-                           cancelButtonTitle:@"Cancel" 
-                           otherButtonTitles:@"OK", nil];
-
-	[alertView show];
+		
+	// UIAlertView *alertView = [[UIAlertView alloc]
+                           // initWithTitle:@"DefaultStyle" 
+                           // message:@"API function worked!"
+                           // delegate:self 
+                           // cancelButtonTitle:@"Cancel" 
+                           // otherButtonTitles:@"OK", nil];
+	// [alertView show];
 	
 	NSString* ssid_ = [command.arguments objectAtIndex:0];  //txtNetworkName;
 	NSString* pss_ = [command.arguments objectAtIndex:1];   //txtPassword;
