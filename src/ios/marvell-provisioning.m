@@ -92,7 +92,7 @@
 	// passphrase[64];
 
     if (echo != nil && [echo length] > 0) {
-		[self xmitterTask];
+		//[self xmitterTask];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:echo];
     } else {
 		//[self xmitterTask];
