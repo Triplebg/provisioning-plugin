@@ -18,13 +18,13 @@
 @interface marvell_provisioning : CDVPlugin 
 {
   // Member variables go here.	
-    BOOL isChecked;   
-    UIAlertView *alertVw;
-    unsigned char bssid[6];
-    int Mode;
-    int invalidKey;
-    int invalidPassphrase;
-    int invalidCustomData;
+    // BOOL isChecked;   
+    // UIAlertView *alertVw;
+    // unsigned char bssid[6];
+    // int Mode;
+    // int invalidKey;
+    // int invalidPassphrase;
+    // int invalidCustomData;
 
 	
 	//for sure needed
@@ -70,6 +70,15 @@
 {
     CDVPluginResult* pluginResult = nil;
     NSString* echo = [command.arguments objectAtIndex:0];
+	
+	UIAlertView *alertView = [[UIAlertView alloc]
+                           initWithTitle:@"DefaultStyle" 
+                           message:@"API function worked!"
+                           delegate:self 
+                           cancelButtonTitle:@"Cancel" 
+                           otherButtonTitles:@"OK", nil];
+
+	[alertView show];
 	
 	NSString* ssid_ = [command.arguments objectAtIndex:0];  //txtNetworkName;
 	NSString* pss_ = [command.arguments objectAtIndex:1];   //txtPassword;
