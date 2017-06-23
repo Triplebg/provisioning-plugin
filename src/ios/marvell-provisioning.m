@@ -71,25 +71,25 @@
     CDVPluginResult* pluginResult = nil;
     NSString* echo = [command.arguments objectAtIndex:0];
 	
-	NSLog(@"API function entered!");
+	// NSLog(@"API function entered!");
 	
-	UIAlertView *alertView = [[UIAlertView alloc]
-                           initWithTitle:@"DefaultStyle" 
-                           message:@"API function worked!"
-                           delegate:self 
-                           cancelButtonTitle:@"Cancel" 
-                           otherButtonTitles:@"OK", nil];
+	// UIAlertView *alertView = [[UIAlertView alloc]
+                           // initWithTitle:@"DefaultStyle" 
+                           // message:@"API function worked!"
+                           // delegate:self 
+                           // cancelButtonTitle:@"Cancel" 
+                           // otherButtonTitles:@"OK", nil];
 
-	[alertView show];
+	// [alertView show];
 	
-	NSString* ssid_ = [command.arguments objectAtIndex:0];  //txtNetworkName;
-	NSString* pss_ = [command.arguments objectAtIndex:1];   //txtPassword;
-			  key_ = [command.arguments objectAtIndex:2];   //txtDeviceKey.text;
-			  data_ = [command.arguments objectAtIndex:3];  //txtCustomData.text 
+	// NSString* ssid_ = [command.arguments objectAtIndex:0];  //txtNetworkName;
+	// NSString* pss_ = [command.arguments objectAtIndex:1];   //txtPassword;
+			  // key_ = [command.arguments objectAtIndex:2];   //txtDeviceKey.text;
+			  // data_ = [command.arguments objectAtIndex:3];  //txtCustomData.text 
 			  
-	strcpy(ssid, [ssid_ UTF8String]);		  
-	strcpy(passphrase, [pss_ UTF8String]);	
-	passLength = [pss_ length];	
+	// strcpy(ssid, [ssid_ UTF8String]);		  
+	// strcpy(passphrase, [pss_ UTF8String]);	
+	// passLength = [pss_ length];	
 	
 	//ssid[33];
 	//passphrase[64];

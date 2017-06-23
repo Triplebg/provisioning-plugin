@@ -24,7 +24,7 @@
 	<platform name="ios">
 		<config-file parent="/*" target="config.xml">
 			<feature name="marvell-provisioning">
-				<param name="ios-package" value="marvell-provisioning" />
+				<param name="ios-package" value="marvell_provisioning" />
 			</feature>
 		</config-file>
 		<source-file src="src/ios/marvell-provisioning.m" />
