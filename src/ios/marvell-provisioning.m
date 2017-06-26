@@ -171,12 +171,12 @@
         [self myEncryptCustomData: key customData: customData];
     }
     
-    inProgress = YES;
-    while (inProgress) {
-        [self statemachine];
-    }
+    // inProgress = YES;
+    // while (inProgress) {
+        // [self statemachine];
+    // }
     
-    /*
+
     if (!inProgress) {
         inProgress = YES;
         timer=  [NSTimer scheduledTimerWithTimeInterval:0.001 target:self selector:
@@ -190,7 +190,7 @@
         _substate = 0;
         inProgress = NO;
         //flag = 1;
-    }*/
+    }
 }
 
 
