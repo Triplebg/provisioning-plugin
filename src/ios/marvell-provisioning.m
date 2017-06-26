@@ -73,17 +73,16 @@
     CDVPluginResult* pluginResult = nil;
     NSString* echo = [command.arguments objectAtIndex:0];
 	
-	ssid_ = [command.arguments objectAtIndex:0];  //txtNetworkName;
-	pss_ = [command.arguments objectAtIndex:1];   //txtPassword;
-	key_ = [command.arguments objectAtIndex:2];   //txtDeviceKey.text;
-	data_ = [command.arguments objectAtIndex:3];  //txtCustomData.text 
+	//ssid_ = [command.arguments objectAtIndex:0];  //txtNetworkName;
+	//pss_ = [command.arguments objectAtIndex:1];   //txtPassword;
+	//key_ = [command.arguments objectAtIndex:2];   //txtDeviceKey.text;
+	//data_ = [command.arguments objectAtIndex:3];  //txtCustomData.text 
 	
-	preamble[0] = 0x45;
-    preamble[1] = 0x5a;
-    preamble[2] = 0x50;
-    preamble[3] = 0x52;
-    preamble[4] = 0x32;
-    preamble[5] = 0x32;
+	ssid_ = @"T+";        
+	pss_ = @"copter-912"; 
+	key_ = @"device_key"; 
+	data_ = @"12345678";  
+	
 	ssidLength = [ssid_ length];
 			  
 	//strcpy(ssid, [ssid_ UTF8String]);		  
@@ -94,6 +93,7 @@
 
 
     if (echo != nil && [echo length] > 0) {
+		inProgress = NO;
 		[self xmitterTask];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:echo];
     } else {
@@ -131,6 +131,13 @@
 
 -(void)xmitterTask
 {
+	preamble[0] = 0x45;
+    preamble[1] = 0x5a;
+    preamble[2] = 0x50;
+    preamble[3] = 0x52;
+    preamble[4] = 0x32;
+    preamble[5] = 0x32;
+	
     strcpy(ssid, [ssid_ UTF8String]);
     strcpy(passphrase, [pss_ UTF8String]);
     passLength = (int)pss_.length;
