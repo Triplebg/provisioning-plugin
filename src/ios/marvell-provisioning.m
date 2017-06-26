@@ -53,7 +53,8 @@
 	NSString* key_;
 	NSString* data_;
 	NSString* ssid_;
-}   NSString* pss_;
+	NSString* pss_;
+}
 
 @property (strong,atomic) NSMutableArray *services;
 @property (assign, nonatomic) NSInteger state;
@@ -442,6 +443,7 @@
             break;
             
         default:
+			break;
             //NSLog(@"MRVL: I should not be here!");
     }
 }
