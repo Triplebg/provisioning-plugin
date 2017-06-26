@@ -73,15 +73,15 @@
     CDVPluginResult* pluginResult = nil;
     NSString* echo = [command.arguments objectAtIndex:0];
 	
-	//ssid_ = [command.arguments objectAtIndex:0];  //txtNetworkName;
-	//pss_ = [command.arguments objectAtIndex:1];   //txtPassword;
-	//key_ = [command.arguments objectAtIndex:2];   //txtDeviceKey.text;
-	//data_ = [command.arguments objectAtIndex:3];  //txtCustomData.text 
+	ssid_ = [command.arguments objectAtIndex:0];  //txtNetworkName;
+	pss_ = [command.arguments objectAtIndex:1];   //txtPassword;
+	key_ = [command.arguments objectAtIndex:2];   //txtDeviceKey.text;
+	data_ = [command.arguments objectAtIndex:3];  //txtCustomData.text 
 	
-	ssid_ = @"T+";        
-	pss_ = @"copter-912"; 
-	key_ = @"device_key"; 
-	data_ = @"12345678";  
+	// ssid_ = @"T+";        
+	// pss_ = @"copter-912"; 
+	// key_ = @"device_key"; 
+	// data_ = @"12345678";  
 	
 	ssidLength = [ssid_ length];
 	
