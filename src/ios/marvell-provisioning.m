@@ -102,7 +102,7 @@
     if (echo != nil && [echo length] > 0) {
 		inProgress = NO;
 		[self xmitterTask];
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:echo];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:key_];
     } else {
 		//[self xmitterTask];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
