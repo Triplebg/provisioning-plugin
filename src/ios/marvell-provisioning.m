@@ -84,6 +84,13 @@
 	data_ = @"12345678";  
 	
 	ssidLength = [ssid_ length];
+	
+	preamble[0] = 0x45;
+    preamble[1] = 0x5a;
+    preamble[2] = 0x50;
+    preamble[3] = 0x52;
+    preamble[4] = 0x32;
+    preamble[5] = 0x32;
 			  
 	//strcpy(ssid, [ssid_ UTF8String]);		  
 	//strcpy(passphrase, [pss_ UTF8String]);	
@@ -103,41 +110,9 @@
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-/*
--(IBAction)OnProvisionClick:(id)sender
-{
-    [self.view endEditing:YES];
-    if (!invalidKey && !invalidPassphrase && !invalidCustomData) {
-        status.text = @"";
-        self.btnProvision.enabled = YES;
-    } else if (invalidKey) {
-        status.text = INVALID_KEY_LENGTH;
-        return;
-    } else if ([txtCustomData.text length] % 2 || invalidCustomData) {
-        status.text = INVALID_CUSTOM_DATA;
-        return;
-    } else {
-        status.text = INVALID_PASSPHRASE_LENGTH;
-        return;
-    }
-
-    if ([AppDelegate isWiFiReachable]) {
-        [self xmitterTask];
-    } else {
-        [self showMessage:MARVELL_NO_NETWORK withTitle:@""];
-        return;
-    }
-}*/
 
 -(void)xmitterTask
 {
-	preamble[0] = 0x45;
-    preamble[1] = 0x5a;
-    preamble[2] = 0x50;
-    preamble[3] = 0x52;
-    preamble[4] = 0x32;
-    preamble[5] = 0x32;
-	
     strcpy(ssid, [ssid_ UTF8String]);
     strcpy(passphrase, [pss_ UTF8String]);
     passLength = (int)pss_.length;
