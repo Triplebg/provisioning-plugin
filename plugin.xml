@@ -29,7 +29,7 @@
 		</config-file>
 		<source-file src="src/ios/marvell-provisioning.m" />
 		<framework src="libz.tbd" />
-		<framework src="SystemConfiguration.framework">
+		<framework src="SystemConfiguration.framework"/>
 		<!-- <framework src=”QuartzCore.framework” />  -->
 		<!-- <framework src=”UIKit.framework” /> -->
 		<!-- <framework src=”Foundation.framework” /> -->
