@@ -7,6 +7,8 @@
 #import "CommonCrypto/CommonCryptor.h"
 #import "CommonCrypto/CommonKeyDerivation.h"
 
+#import <SystemConfiguration/CaptiveNetwork.h>
+
 /*
 #import "Reachability.h"
 #import "Constant.h"
@@ -61,6 +63,7 @@
 @property (assign, nonatomic) NSInteger substate;
 
 - (void)SendProvisionData:(CDVInvokedUrlCommand*)command;
+- (void)GetCurrentSSID:(CDVInvokedUrlCommand*)command;
 @end
 
 
@@ -109,6 +112,24 @@
     }
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)GetCurrentSSID:(CDVInvokedUrlCommand*)command
+{
+	CDVPluginResult* pluginResult = nil;	
+	
+	NSString *wifiName = nil;
+    NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
+    for (NSString *ifnam in ifs) {
+        NSDictionary *info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
+        if (info[@"SSID"]) {
+            wifiName = info[@"SSID"];
+        }
+    }
+	
+	pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:wifiName];
+	
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 -(void)xmitterTask
