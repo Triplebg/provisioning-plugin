@@ -1,0 +1,22 @@
+{
+  "name": "provisioning-plugin",
+  "version": "1.0.0",
+  "description": "Make provisioning with marvel hub",
+  "main": "marvell-provisioning.js",
+  "scripts": {
+    "test": "helllo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Triplebg/provisioning-plugin.git"
+  },
+  "keywords": [
+    "provisioning"
+  ],
+  "author": "TripleBG",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Triplebg/provisioning-plugin/issues"
+  },
+  "homepage": "https://github.com/Triplebg/provisioning-plugin#readme"
+}
